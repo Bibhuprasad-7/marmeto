@@ -32,20 +32,37 @@ function displayCart() {
   let subtotal = 0;
   let totalItems = 0;
 
-  shoppingCart.forEach(item => {
-    subtotal += item.price * item.quantity;
-    totalItems += item.quantity;
-
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td><img src="${item.image}" alt="${item.title}" width="50">${item.title}</td>
-      <td>₹${(item.price / 100).toFixed(2)}</td>
-      <td><input type="number" min="1" value="${item.quantity}" data-id="${item.id}" class="quantity"></td>
-      <td class="line-price" data-id="${item.id}">₹${((item.price * item.quantity) / 100).toFixed(2)}</td>
-      <td><button data-id="${item.id}" class="remove-item" style="background-color: #b88e2f; color: white; border: none; padding: 5px 10px; border-radius: 4px;">🗑️</button></td>
+  if (shoppingCart.length === 0) {
+    // If the cart is empty, display an "Add Item" button
+    const addItemRow = document.createElement("tr");
+    addItemRow.innerHTML = `
+      <td colspan="5" style="text-align: center;">
+        <button id="add-item-button" style="padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 5px;">Add Item</button>
+      </td>
     `;
-    cartListEl.appendChild(row);
-  });
+    cartListEl.appendChild(addItemRow);
+
+    // Handle adding item back to the cart
+    document.getElementById("add-item-button").addEventListener("click", () => {
+      addItemToCart(); // Call function to add item back to cart
+    });
+
+  } else {
+    shoppingCart.forEach(item => {
+      subtotal += item.price * item.quantity;
+      totalItems += item.quantity;
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td><img src="${item.image}" alt="${item.title}" width="50">${item.title}</td>
+        <td>₹${(item.price / 100).toFixed(2)}</td>
+        <td><input type="number" min="1" value="${item.quantity}" data-id="${item.id}" class="quantity"></td>
+        <td class="line-price" data-id="${item.id}">₹${((item.price * item.quantity) / 100).toFixed(2)}</td>
+        <td><button data-id="${item.id}" class="remove-item" style="background-color: #b88e2f; color: white; border: none; padding: 5px 10px; border-radius: 4px;">🗑️</button></td>
+      `;
+      cartListEl.appendChild(row);
+    });
+  }
 
   subtotalElement.textContent = `₹${(subtotal / 100).toFixed(2)}`;
   totalElement.textContent = `₹${(subtotal / 100).toFixed(2)}`;
@@ -54,7 +71,13 @@ function displayCart() {
   document.querySelectorAll(".quantity").forEach(input => {
     input.addEventListener("change", event => {
       const id = event.target.dataset.id;
-      const newQuantity = Math.max(1, parseInt(event.target.value));
+      let newQuantity = parseInt(event.target.value);
+
+      if (newQuantity < 1) {
+        newQuantity = 1;
+        event.target.value = 1;
+      }
+
       const item = shoppingCart.find(item => item.id == id);
 
       if (item) {
@@ -74,6 +97,20 @@ function displayCart() {
   });
 }
 
+function addItemToCart() {
+  // Example: Add a new item back to the cart. Replace with actual logic to fetch and add items
+  const newItem = {
+    id: "new-item-id",
+    title: "Sample Item",
+    price: 25000000, // 50.00 Rs
+    quantity: 1,
+    image: "https://via.placeholder.com/50"
+  };
+
+  shoppingCart.push(newItem);
+  displayCart();
+}
+
 checkoutButton.addEventListener("click", () => {
   if (shoppingCart.length === 0) {
     alert("Your cart is empty. Add items to proceed to checkout.");
@@ -85,6 +122,7 @@ checkoutButton.addEventListener("click", () => {
   displayCart();
 });
 
+// Load cart data if it's empty
 if (shoppingCart.length === 0) {
   loadCartData();
 } else {
