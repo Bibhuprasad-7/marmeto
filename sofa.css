@@ -1,76 +1,95 @@
-ody {
+/* General body styling */
+body {
   font-family: Arial, sans-serif;
+  background-color: #f2f2f2; /* Light background */
   margin: 0;
   padding: 0;
-  background-color: #f8f8f8;
 }
 
+/* Main cart container */
 .cart-container {
   width: 80%;
-  margin: 50px auto;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 30px auto;
+  background-color: #ffffff; /* White background for cart */
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  height: auto;
+  max-height: 800px;
+  overflow-y: auto; /* Allow scrolling if content overflows */
 }
 
+/* Header */
 h1 {
   text-align: center;
-  color: #333;
+  color: #333; /* Dark color for the header */
+  font-size: 32px;
+  padding-bottom: 20px;
 }
 
+/* Table styling */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
+  background-color: #f9f9f9; /* Slight background for the table */
 }
 
 th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
+  padding: 12px;
   text-align: left;
+  border: 1px solid #ddd;
 }
 
+/* Table headers with color */
 th {
-  background-color: #f4f4f4;
-}
-
-.remove-item {
-  background-color: #b88e2f;
+  background-color: #4CAF50; /* Green background */
   color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
+  font-weight: bold;
 }
 
-.remove-item:hover {
-  background-color: #a87d20;
+/* Cart item row */
+td {
+  background-color: #fff;
 }
 
+/* Summary box styling */
 .cart-summary {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  background-color: #f9f9f9;
+  background-color: #f8f8f8; /* Light grey background */
+  padding: 20px;
+  border-radius: 6px;
   border: 1px solid #ddd;
-  border-radius: 5px;
 }
 
+.cart-summary p {
+  font-size: 18px;
+  margin: 0;
+}
+
+.cart-summary span {
+  font-weight: bold;
+}
+
+/* Checkout button */
 .checkout-button {
-  background-color: #28a745;
+  background-color: #28a745; /* Green background */
   color: white;
   border: none;
-  padding: 10px 15px;
+  padding: 12px 25px;
+  font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .checkout-button:hover {
-  background-color: #218838;
+  background-color: #218838; /* Darker green on hover */
 }
 
+/* Loader */
 .loader {
   position: fixed;
   top: 50%;
@@ -79,16 +98,16 @@ th {
   border: 8px solid #f3f3f3;
   border-top: 8px solid #3498db;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
   from {
-    transform: rotate(0deg);
+      transform: rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
+      transform: rotate(360deg);
   }
 }
